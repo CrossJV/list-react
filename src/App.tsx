@@ -56,7 +56,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const fetchSelected = async () => {
       try {
-        const response = await fetch('/api/selected');
+        const response = await fetch('https://list-blue-xi.vercel.app/selected');
         if (!response.ok) throw new Error('Failed to fetch selected items');
         const selectedIds = await response.json();
         setSelected(selectedIds);
@@ -71,8 +71,8 @@ const App: React.FC = () => {
     if (offset === 0 && items.length > 0 && !search) return;
 
     const url = search
-      ? `/api/search?q=${search}&offset=${offset}&limit=${limit}`
-      : `/api/items?offset=${offset}&limit=${limit}`;
+      ? `https://list-blue-xi.vercel.app/search?q=${search}&offset=${offset}&limit=${limit}`
+      : `https://list-blue-xi.vercel.app/items?offset=${offset}&limit=${limit}`;
     try {
       const response = await fetch(url);
       if (!response.ok) throw new Error('Failed to fetch items');
@@ -92,7 +92,7 @@ const App: React.FC = () => {
         const newItems = arrayMove(items, oldIndex, newIndex);
         setItems(newItems);
         try {
-          await fetch('/api/move', {
+          await fetch('https://list-blue-xi.vercel.app/move', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ from: oldIndex, to: newIndex })
@@ -106,7 +106,7 @@ const App: React.FC = () => {
 
   const handleSelect = async (id: number) => {
     const isSelected = selected.includes(id);
-    const url = isSelected ? '/api/deselect' : '/api/select';
+    const url = isSelected ? 'https://list-blue-xi.vercel.app/deselect' : 'https://list-blue-xi.vercel.app/select';
     try {
       const response = await fetch(url, {
         method: 'POST',
